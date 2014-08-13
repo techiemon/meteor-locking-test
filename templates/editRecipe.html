@@ -11,8 +11,20 @@
         <label for="description">Description</label>
         <textarea name="description" class="form-control" ng-model="recipe.description"></textarea>
       </div>
+      <p>
+        Ingredients:
+        <ul>
+          <li ng-repeat="ingredient in recipe.ingredients">[[ingredient.name]] <a href="" ng-click="deleteIngredient($index)">&times;</a></li>
+        </ul>
+        <div class="form-group">
+          <input name="ingredient" class="form-control" ng-model="newIngredient.name" type="text" />
+          <input type="button" value="Add" class="btn" ng-click="addIngredient()" />
+        </div>
+      </p>
+
       <div class="form-actions">
         <input type="submit" class="btn primary" value="Save" ng-click="saveRecipe()">
+        <input type="submit" class="btn primary" value="Delete" ng-click="deleteRecipe()" ng-show="recipe._id">
         <input type="button" class="btn" value="Cancel">
       </div>
     </form>
