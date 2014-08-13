@@ -1,0 +1,16 @@
+<template name="recipe.html">
+  <div id="recipe_view">
+    <dl>
+      <dt>[[recipe.title]]</dt>
+      <dd>[[recipe.description]]</dd>
+    </dl>
+    <a href="#recipes/[[recipe._id]]/edit">Edit</a>
+    <p>
+      Ingredients:
+      <ul>
+        <li ng-repeat="ingredient in recipe.ingredients">[[ingredient.name]]</li>
+      </ul>
+      <input name="ingredientName" typeahead="ingredient.name for ingredient in ingredients" ng-model="selectedIngredient.name" typeahead-on-select="addIngredient()"/>
+    </p>
+  </div>
+</template>

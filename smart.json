@@ -1,0 +1,11 @@
+{
+  "packages": {
+    "ngMeteor": {
+      "path": "/Users/superchris/dev/ngMeteor"
+    },
+    "bower": {}
+  },
+  "bower": {
+    "bootstrap": "latest"
+  }
+}

@@ -1,0 +1,22 @@
+<head>
+  <title>ngmeteor-cookbook</title>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div id="recipe_list_view" class="col-md-3" ng-controller="RecipesCtrl">
+        <p>Search: <input ng-model="search" /></p>
+        <ul class="nav nav-tabs nav-stacked">
+          <li ng-repeat="recipe in recipes | filter:search"><a href="#recipes/[[recipe._id]]">[[recipe.title]]</a></li>
+        </ul>
+        <a class="btn" href="#recipes/new">New Recipe</a>
+      </div>
+      <div class="col-md-9">
+        Hey there
+        <ng-view></ng-view>
+      </div>
+    </div>
+  </div>
+</body>
