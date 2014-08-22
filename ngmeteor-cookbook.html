@@ -12,9 +12,11 @@
           <li ng-repeat="recipe in recipes | filter:search"><a href="#recipes/[[recipe._id]]">[[recipe.title]]</a></li>
         </ul>
         <a class="btn" href="#recipes/new">New Recipe</a>
+        <a href="" ng-click="prev()">Prev</a>
+        <a href="" ng-click="next()">Next</a>
+        Total recipes: [[recipesCount]]
       </div>
       <div class="col-md-9">
-        Hey there
         <ng-view></ng-view>
       </div>
     </div>
