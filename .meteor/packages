@@ -6,6 +6,7 @@
 standard-app-packages
 autopublish
 insecure
-ngMeteor
 coffeescript
-bower
+mquandalle:bower@0.1.10
+superchris:ng-meteor
+

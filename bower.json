@@ -1,0 +1,22 @@
+{
+  "name": "ngmeteor-cookbook",
+  "main": "ngmeteor-cookbook.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/superchris/ngmeteor-cookbook",
+  "authors": [
+    "Chris Nelson <chris@gaslight.co>"
+  ],
+  "description": "Port of our cookbook example app to ng-metoer",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "latest"
+  }
+}
