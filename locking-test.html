@@ -1,0 +1,27 @@
+<head>
+  <title>ticket race test</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+</head>
+
+
+<body>
+  <div class="container">
+
+    <div class="row">
+      <div ng-controller="SeatsCtrl">
+        <p ng-bind="next_purchase">Not Set</p>
+        <h1>[[username]]</h1>
+        <button ng-click="mdebug()">debug</button>
+        <button ng-click="restart()">restart</button>
+        <input type="text" ng-model="username" placeholder="Enter your username to start the race." size="120">
+        <button ng-click="start()" ng-if="username.length">Start Race</button>
+        <div ng-repeat="seat in seats">
+            <div style="height:20px;width:20px;float:left;border:1px solid #000000;margin:1px;background-color:[[seat.color]];">
+             
+              <label ng-if="seat.lock">x</label>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

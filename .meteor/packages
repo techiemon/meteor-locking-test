@@ -6,7 +6,6 @@
 standard-app-packages
 autopublish
 insecure
-coffeescript
 mquandalle:bower@0.1.10
 superchris:ng-meteor
-
+lepozepo:streams
