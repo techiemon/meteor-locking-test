@@ -1,35 +1,55 @@
 angular.module("app").controller("SeatsCtrl", [
   "$scope", "$collection", function($scope, $collection) {
+    var client_color = Math.floor(Math.random()*16777215).toString(16);
+
     $scope.mdebug = function() {
       return console.debug($scope.seats);
     };
     $scope.start = function() {
       console.debug('BUY BUY BUY !!!!!!!!!!!!!!');
+
+
       $.each($scope.seats, function(i,seat) {
         // seat = angular.copy(bseat);
         if (! seat.lock) {
           seat.username = $scope.username;
-          if ($scope.username === 'cat') {
-            seat.color = '#6C7B8B';
-          } else {
-            seat.color = '#473C8B';
-          }
+          seat.color = '#' + client_color;
           seat.lock = true;
 
+
+
+          Meteor.call('buySeat', seat, function(err, response) {
+            console.debug(err, response);
+          });
+
           // $scope.seats.save(seat);
-       
-            Meteor.call('buySeat', seat, function(err, response) {
-              // console.debug(err, response);
-            });
         }
       });
     };
+
+    $scope.buySeat = function(seat) {
+
+        if (! seat.lock) {
+          seat.username = $scope.username;
+          seat.color = '#' + client_color;
+          seat.lock = true;
+
+          // $scope.seats.save(seat);
+
+          Meteor.call('buySeat', seat, function(err, response) {
+            console.debug(err, response);
+          });
+
+          // $scope.seats.save(seat);
+
+        }
+    }
 
   // chatStream.on('message', function(message) {
   //   console.log('user ng: ' + message);
   // });
     chatStream.on('message', function(message) {
-      
+
       $scope.next_purchase = message.toString();
       starttimer(message);
       console.log('EMIT REC: ' + message);

@@ -5,7 +5,7 @@ Meteor.methods({
     resetSeatCollection();
     var target = new Date();
     target.setTime(target.getTime() + 1000 * 20);
-    
+
     return target;
   },
 
@@ -28,22 +28,28 @@ Meteor.methods({
                           }
                         }
                       );
+    return res;
 
   } // end buySeat
 });
 
 resetSeatCollection = function() {
-  Seats.remove({});
-  var result = false;
+  if (Seats.find().count() > 0) {
+    Seats.update(
+      {},
+      {$set: {color:'#fffff', username:null, lock: false}},
+      {multi: true}
+    );
+  }
+};
+
+
+Meteor.startup(function() {
   if (Seats.find().count() === 0) {
     for ($x = 1; $x <= 2000; $x++) {
         result = Seats.insert({color:'#fff', username:null, lock: false});
     }
     return result;
-  }};
-
-
-    Meteor.startup(function() {
-        resetSeatCollection();
-    });
+  }
+});
 
