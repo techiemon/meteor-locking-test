@@ -96,6 +96,13 @@ angular.module("app").controller("SeatsCtrl", [
 		});
 	}
 
+	$scope.ggg = function() {
+		Meteor.call('randomSelection', {username: $scope.username, color: $scope.client_color}, function(err, res) {
+			console.debug(err, res);
+		});
+	}
+
+
 	$scope.buySeat = function(seat) {
 
 		if (! seat.lock) {
@@ -119,7 +126,7 @@ angular.module("app").controller("SeatsCtrl", [
 		var total = 0;
 		$.each($scope.seats, function(i,s) {
 			// console.debug('s', s);
-			if (s.color == '#' + $scope.client_color) {
+			if (s.username == $scope.username) {
 				total++;
 			}
 		});
@@ -141,14 +148,15 @@ angular.module("app").controller("SeatsCtrl", [
 	};
 
 	var starttimer = function(message) {
-		alert('Starting at: ' + message);
+		// alert('Starting at: ' + message);
 		$scope.next_purchase = message.toString();
 
 		var millisTill10 = Math.abs(new Date() - message);
 		ticker = setInterval(countdown(message), 1000);
 
 		setTimeout(function() {
-			$scope.start();
+			// $scope.start();
+			$scope.ggg();
 			clearInterval(ticker);
 		}, millisTill10);
 	}
