@@ -7,5 +7,6 @@ standard-app-packages
 autopublish
 insecure
 mquandalle:bower@0.1.10
-superchris:ng-meteor
+#superchris:ng-meteor
+urigo:ngmeteor
 lepozepo:streams

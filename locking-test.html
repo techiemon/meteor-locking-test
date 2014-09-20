@@ -5,8 +5,12 @@
 
 
 <body>
-  <div class="container">
+  <h1>YO</h1>
+  {{> hello}}
+</body>
 
+<template name="hello">
+  <div class="container">
     <div class="row">
       <div ng-controller="SeatsCtrl">
         <p ng-bind="next_purchase">Not Set</p>
@@ -14,14 +18,15 @@
         <button ng-click="mdebug()">debug</button>
         <button ng-click="restart()">restart</button>
         <input type="text" ng-model="username" value="" placeholder="Enter your username to start the race." size="120">
-        <button ng-click="start()" ng-if="username.length">Start Race</button>
-        <div ng-repeat="seat in seats" style="width:600px;">
+        <button ng-click="start()" ng-if="username.length">
+          Start Race
+        </button>
+        <div ng-repeat="seat in seats" style="width:100%;">
             <div ng-click="buySeat(seat);" style="height:20px;width:20px;float:left;border:1px solid #000000;margin:1px;background-color:[[seat.color]];">
-
               <label ng-if="seat.lock">x</label>
             </div>
         </div>
       </div>
     </div>
   </div>
-</body>
+</template>

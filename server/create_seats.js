@@ -1,56 +1,66 @@
 
 Meteor.methods({
-  resetSeats: function () {
-    console.log('on server, resetting seats.');
-    resetSeatCollection();
-    var target = new Date();
-    target.setTime(target.getTime() + 1000 * 20);
+	resetSeats: function () {
+		console.log('on server, resetting seats.');
+		resetSeatCollection();
+		var target = new Date();
+		target.setTime(target.getTime() + 1000 * 20);
+		return target;
+	},
 
-    return target;
-  },
+	buySeat: function (seats) {
 
-  buySeat: function (seat) {
-    // console.log('Seat id: ', seat._id);
-    if(seat._id===undefined) {
-      throw new Meteor.Error(404, "Undefined seat ID");
-    }
+		var ids = [];
 
-    return Seats.update(
-                        {
-                          _id: seat._id,
-                          lock: false
-                        },
-                        {
-                          $set: {
-                            lock: true,
-                            color: seat.color,
-                            username: seat.username
-                          }
-                        }
-                      );
-    // return res;
+		for (i=0; i<seats.length; i++ ) {
+			if(seats[i]._id===undefined) {
+				throw new Meteor.Error(404, "Undefined seat ID");
+			}
+			ids.push(seats[i]._id);
+		};
 
-  } // end buySeat
+		// console.log(ids);
+		var res = Seats.update(
+			{
+				_id: {$in: ids},
+				lock: false
+			},
+			{
+				$set: {
+					lock: true,
+					color: seats[0].color,
+					username: seats[0].username
+				}
+			},
+			{
+				multi: true
+			}
+		);
+
+		// console.log(res);
+		return res;
+
+	} // end buySeat
 });
 
 resetSeatCollection = function() {
-  if (Seats.find().count() > 0) {
-    Seats.update(
-      {},
-      {$set: {color:'#fffff', username:null, lock: false}},
-      {multi: true}
-    );
-  }
+	if (Seats.find().count() > 0) {
+		Seats.update(
+			{},
+			{$set: {color:'#fffff', username:null, lock: false}},
+			{multi: true}
+		);
+	}
 };
 
 
 Meteor.startup(function() {
-  Seats.remove({});
-  if (Seats.find().count() === 0) {
-    for ($x = 1; $x <= 1000; $x++) {
-        result = Seats.insert({color:'#fff', username:null, lock: false});
-    }
-    return result;
-  }
+	Seats.remove({});
+	if (Seats.find().count() === 0) {
+		for ($x = 1; $x <= 2000; $x++) {
+			var result = Seats.insert({color:'#fff', username:null, lock: false});
+		}
+		return result;
+	}
 });
 
