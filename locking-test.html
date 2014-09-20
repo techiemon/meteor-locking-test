@@ -1,32 +1,32 @@
 <head>
-  <title>ticket race test</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<title>ticket race test</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 </head>
 
 
 <body>
-  <h1>YO</h1>
-  {{> hello}}
+	{{> main}}
 </body>
 
-<template name="hello">
-  <div class="container">
-    <div class="row">
-      <div ng-controller="SeatsCtrl">
-        <p ng-bind="next_purchase">Not Set</p>
-        <h1>[[username]]</h1>
-        <button ng-click="mdebug()">debug</button>
-        <button ng-click="restart()">restart</button>
-        <input type="text" ng-model="username" value="" placeholder="Enter your username to start the race." size="120">
-        <button ng-click="start()" ng-if="username.length">
-          Start Race
-        </button>
-        <div ng-repeat="seat in seats" style="width:100%;">
-            <div ng-click="buySeat(seat);" style="height:20px;width:20px;float:left;border:1px solid #000000;margin:1px;background-color:[[seat.color]];">
-              <label ng-if="seat.lock">x</label>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<template name="main">
+	<div class="container">
+		<div class="row">
+			<div ng-controller="SeatsCtrl">
+				<h1 style="color:#[[client_color]];">Buyer: [[username]]</h1>
+				<p>Next autobuy at:<label ng-bind="next_purchase">Not Set</label></p>
+				<button ng-click="restart()">Reset and Set all clients to start in 1 minute</button>
+				<br>
+				<input type="text" ng-model="username" value="" size="20">
+				<button ng-click="start()" ng-if="username.length">
+					Manually start buying
+				</button>
+				<div ng-repeat="seat in seats" style="width:100%;">
+						<div ng-click="buySeat(seat);" style="height:20px;width:20px;float:left;border:1px solid #000000;margin:1px;background-color:[[seat.color]];">
+							<label ng-if="seat.lock">x</label>
+						</div>
+				</div>
+				<button ng-click="mdebug()">debug</button>
+			</div>
+		</div>
+	</div>
 </template>
