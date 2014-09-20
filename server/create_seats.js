@@ -15,7 +15,7 @@ Meteor.methods({
       throw new Meteor.Error(404, "Undefined seat ID");
     }
 
-    var res = Seats.update(
+    return Seats.update(
                         {
                           _id: seat._id,
                           lock: false
@@ -28,7 +28,7 @@ Meteor.methods({
                           }
                         }
                       );
-    return res;
+    // return res;
 
   } // end buySeat
 });
@@ -45,8 +45,9 @@ resetSeatCollection = function() {
 
 
 Meteor.startup(function() {
+  Seats.remove({});
   if (Seats.find().count() === 0) {
-    for ($x = 1; $x <= 2000; $x++) {
+    for ($x = 1; $x <= 1000; $x++) {
         result = Seats.insert({color:'#fff', username:null, lock: false});
     }
     return result;

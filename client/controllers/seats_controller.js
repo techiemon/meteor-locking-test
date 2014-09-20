@@ -2,30 +2,78 @@ angular.module("app").controller("SeatsCtrl", [
   "$scope", "$collection", function($scope, $collection) {
     var client_color = Math.floor(Math.random()*16777215).toString(16);
 
+    $scope.username = 'user';
     $scope.mdebug = function() {
       return console.debug($scope.seats);
     };
     $scope.start = function() {
       console.debug('BUY BUY BUY !!!!!!!!!!!!!!');
 
+      function randomIntFromInterval(min,max)
+      {
+          return Math.floor(Math.random()*(max-min+1)+min);
+      }
 
+      // $.each($scope.seats, function(i,seat) {
+      //   // seat = angular.copy(bseat);
+      //   if (! seat.lock) {
+      //     seat.username = $scope.username;
+      //     seat.color = '#' + client_color;
+      //     seat.lock = true;
+
+
+      //     mofo(seat);
+
+      //     // $scope.seats.save(seat);
+      //   }
+      // });
+      // 
+      // 
+      var available_seats = [];
       $.each($scope.seats, function(i,seat) {
-        // seat = angular.copy(bseat);
-        if (! seat.lock) {
-          seat.username = $scope.username;
-          seat.color = '#' + client_color;
-          seat.lock = true;
-
-
-
-          Meteor.call('buySeat', seat, function(err, response) {
-            console.debug(err, response);
-          });
-
-          // $scope.seats.save(seat);
+        if (seat.lock == false) {
+          available_seats.push(seat);
         }
       });
+
+
+      var max = available_seats.length - 2; // minus 1 , minus 1 seat so 2 can be allocated.
+      var position = randomIntFromInterval(0, max);
+
+      // while (available_seats[position].lock == true) {
+      //   position = randomIntFromInterval(0, max);
+      // }
+
+      var two_seats = [
+            available_seats[position],
+            available_seats[position+1]
+          ];
+// console.debug(max, position, two_seats);
+      $.each(two_seats, function(i, seat) {
+        seat.username = $scope.username;
+        seat.color = '#' + client_color;
+        seat.lock = true;
+        mofo(seat);
+      });
+
+      var done = true;
+      $.each($scope.seats, function(i,seat) {
+        if (seat.lock == false) {
+          done = false;
+        }
+      });
+console.debug('done:', done);
+      if (! done) {
+        $scope.start();
+      }
     };
+
+    function mofo(seat) {
+          // console.debug(seat._id);
+          return Meteor.apply('buySeat', [seat],  {wait: true}, function(err,res) {
+            // console.debug(err, res);
+          });
+    }
 
     $scope.buySeat = function(seat) {
 
@@ -36,7 +84,7 @@ angular.module("app").controller("SeatsCtrl", [
 
           // $scope.seats.save(seat);
 
-          Meteor.call('buySeat', seat, function(err, response) {
+          Meteor.apply('buySeat', [seat], {wait: true}, function(err, response) {
             console.debug(err, response);
           });
 
