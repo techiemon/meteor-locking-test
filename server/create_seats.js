@@ -4,7 +4,7 @@ Meteor.methods({
 		console.log('on server, resetting seats.');
 		resetSeatCollection();
 		var target = new Date();
-		target.setTime(target.getTime() + 1000 * 20);
+		target.setTime(target.getTime() + 1000 * 10);
 		return target;
 	},
 
@@ -20,25 +20,36 @@ Meteor.methods({
 		};
 
 		// console.log(ids);
-		var res = Seats.update(
+		var tcount = Seats.find(
 			{
 				_id: {$in: ids},
 				lock: false
-			},
-			{
-				$set: {
-					lock: true,
-					color: seats[0].color,
-					username: seats[0].username
-				}
-			},
-			{
-				multi: true
 			}
-		);
+		).count();
 
-		// console.log(res);
-		return res;
+		if (tcount == ids.length && seats[0] !== 'undefined') {
+			var res = Seats.update(
+				{
+					_id: {$in: ids},
+					lock: false
+				},
+				{
+					$set: {
+						lock: true,
+						color: seats[0].color,
+						username: seats[0].username
+					}
+				},
+				{
+					multi: true
+				}
+			);
+			// console.log(res);
+			return res;
+		}
+
+		// console.log('skip');
+		return 0;
 
 	} // end buySeat
 });
