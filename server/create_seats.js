@@ -100,15 +100,15 @@ resetSeatCollection = function() {
 
 
 Meteor.startup(function() {
-	// Seats.remove({});
+	Seats.remove({});
 	if (Seats.find().count() === 0) {
 		var ns = [];
-		for ($x = 1; $x <= 2000; $x++) {
+		for ($x = 1; $x <= 500; $x++) {
 			var result = Seats.insert({color:'#fff', username:null, lock: false, venue: 1});
 		}
-		for ($x = 1; $x <= 1000000; $x++) {
-			var result = Seats.insert({color:'#fff', username:null, lock: false, venue: 2});
-		}
+		// for ($x = 1; $x <= 1000000; $x++) {
+		// 	var result = Seats.insert({color:'#fff', username:null, lock: false, venue: 2});
+		// }
 
 		return result;
 	}
@@ -117,6 +117,5 @@ Meteor.startup(function() {
 });
 
 Meteor.publish("NSeats", function (venue_id) {
-	console.log('venue:' + venue_id);
-  	return Seats.find({venue: venue_id}); // everything
+  	return Seats.find({venue: venue_id}); // only the requested venue;
 });

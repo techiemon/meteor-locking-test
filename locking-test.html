@@ -5,12 +5,17 @@
 
 
 <body>
-	{{> main}}
+	<div class="bar bar-header bar-positive">
+		<h1 class="title">Gigmagnet</h1>
+	</div>
+	<ion-content scrollbar-y="true" has-bouncing="true">
+		{{> main}}
+	</ion-content>
 </body>
 
 <template name="main">
 	<div class="container">
-		<div class="row">
+		<div class="row-err">
 			<div ng-controller="SeatsCtrl">
 				<h1 style="cursor:pointer;color:#[[client_color]];" ng-click="changeColor()">Buyer: [[username]]</h1>
 				<h3>Attempted: [[desired]]</h3>
@@ -21,13 +26,13 @@
 					<label ng-repeat="q in qty">[[q.qty]], </label> tickets
 				</h5>
 				<p>Next auto buy at: <label ng-bind="next_purchase">Not Set</label></p>
-				<button ng-click="restart()">Reset and Set all clients to start in 1 minute</button>
+				<button ng-click="restart()" class="button button-energized button-full">Reset and Set all clients to start in 1 minute</button>
 				<br><br>
 				<input type="text" ng-model="username" value="" size="20">
-				<button ng-click="start()" ng-if="username.length">
+				<button ng-click="start()" ng-if="username.length" class="button button-assertive">
 					Manually start buying
 				</button>
-				<button ng-click="ggg()">
+				<button ng-click="ggg()" class="button button-assertive">
 					Server MasterMind
 				</button>
 				<br><br>
@@ -35,7 +40,7 @@
 						<div ng-click="buySeat(seat);" style="height:20px;width:20px;float:left;border:1px solid #000000;margin:1px;background-color:[[seat.color]];">
 						</div>
 				</div>
-				<button ng-click="mdebug()">debug</button>
+				<button ng-click="mdebug()" class="button button-dark button-full">debug</button>
 			</div>
 		</div>
 	</div>
