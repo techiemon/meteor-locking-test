@@ -82,7 +82,7 @@ Meteor.methods({
 			return res;
 		}
 
-		 console.log('skip');
+		 // console.log('skip');
 		return 0;
 
 	} // end buySeat

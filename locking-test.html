@@ -33,7 +33,6 @@
 				<br><br>
 				<div ng-repeat="seat in seats" style="width:100%;">
 						<div ng-click="buySeat(seat);" style="height:20px;width:20px;float:left;border:1px solid #000000;margin:1px;background-color:[[seat.color]];">
-							<label ng-if="seat.lock">x</label>
 						</div>
 				</div>
 				<button ng-click="mdebug()">debug</button>
