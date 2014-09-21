@@ -97,7 +97,7 @@ angular.module("app").controller("SeatsCtrl", [
 	}
 
 	$scope.ggg = function() {
-		Meteor.call('randomSelection', {username: $scope.username, color: $scope.client_color}, function(err, res) {
+		Meteor.call('randomSelection', {username: $scope.username, color: $scope.client_color}, 1, function(err, res) {
 			console.debug(err, res);
 		});
 	}
@@ -166,6 +166,8 @@ angular.module("app").controller("SeatsCtrl", [
 		console.debug(cd);
 	};
 
+	var wtf = Meteor.subscribe("NSeats", 1);//.bind($scope, 'seats');;
+	// console.debug(wtf, NSeats);
 
 	return $collection(Seats).bind($scope, 'seats');
 	}

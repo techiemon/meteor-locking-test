@@ -11,14 +11,14 @@ Meteor.methods({
 		target.setTime(target.getTime() + 1000 * 10);
 		return target;
 	},
-	randomSelection: function(user) {
-		var seatsCursor = Seats.find({lock: false});
+	randomSelection: function(user, venue_id) {
+		var seatsCursor = Seats.find({lock: false, venue: venue_id});
 		var seats = seatsCursor.fetch();
 // console.log(seats);
 		var qty = randomIntFromInterval(1,10);
 
 		var max = (seats.length > qty) ? (seats.length - qty) : 1 ; // minus 1 , minus 1 seat so 2 can be allocated.
-		var position = 0; //randomIntFromInterval(0, max);
+		var position = randomIntFromInterval(0, max);
 
 		var multi_seats = [];
 
@@ -36,8 +36,8 @@ Meteor.methods({
 			// return {err, res};
 		});
 
-		if (Seats.find({lock: false}).count()) {
-			Meteor.call('randomSelection', user, function(err,res) {
+		if (Seats.find({lock: false, venue: venue_id}).count()) {
+			Meteor.call('randomSelection', user, venue_id, function(err,res) {
 				// return {err, res};
 			});
 		};
@@ -91,7 +91,7 @@ Meteor.methods({
 resetSeatCollection = function() {
 	if (Seats.find().count() > 0) {
 		Seats.update(
-			{},
+			{lock: true, venue: 1},
 			{$set: {color:'#fffff', username:null, lock: false}},
 			{multi: true}
 		);
@@ -100,12 +100,23 @@ resetSeatCollection = function() {
 
 
 Meteor.startup(function() {
-	Seats.remove({});
+	// Seats.remove({});
 	if (Seats.find().count() === 0) {
+		var ns = [];
 		for ($x = 1; $x <= 2000; $x++) {
-			var result = Seats.insert({color:'#fff', username:null, lock: false});
+			var result = Seats.insert({color:'#fff', username:null, lock: false, venue: 1});
 		}
+		for ($x = 1; $x <= 1000000; $x++) {
+			var result = Seats.insert({color:'#fff', username:null, lock: false, venue: 2});
+		}
+
 		return result;
 	}
+		Seats._ensureIndex({venue: 1, lock: 1});
+		console.log(Seats.find().count());	
 });
 
+Meteor.publish("NSeats", function (venue_id) {
+	console.log('venue:' + venue_id);
+  	return Seats.find({venue: venue_id}); // everything
+});
