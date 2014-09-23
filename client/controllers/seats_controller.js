@@ -166,7 +166,7 @@ angular.module("app").controller("SeatsCtrl", [
 		console.debug(cd);
 	};
 
-	var wtf = Meteor.subscribe("NSeats", 1);//.bind($scope, 'seats');;
+	var wtf = Meteor.subscribe("Seats", 1);//.bind($scope, 'seats');;
 	// console.debug(wtf, NSeats);
 
 	return $collection(Seats).bind($scope, 'seats');
